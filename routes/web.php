@@ -21,3 +21,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+Route::get('/change-account', [App\Http\Controllers\HomeController::class, 'changeAccount'])->name('change-account');
+Route::post('/change-account', [App\Http\Controllers\HomeController::class, 'updateAccount'])->name('update-account');
+Route::get('/change-password', [App\Http\Controllers\HomeController::class, 'changePassword'])->name('change-password');
+Route::post('/change-password', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('update-password');
