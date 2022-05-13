@@ -1,0 +1,5 @@
+body{background-color: #ddd;}
+.bandPageHeader{display: flex; align-items: center;}
+.bandPageHeader .profilePicture{display: inline-block; width: 100%; aspect-ratio: 1/1; max-width: 250px; object-fit: contain;}
+.bandPageHeader h1{display: inline-block;}
+.youtubeVideo{aspect-ratio: 16/9;}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BandController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,14 +15,11 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\BandController::class, 'index']);
 
 Auth::routes();
-
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-
+Route::resource('bands', App\Http\Controllers\BandController::class);
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/change-account', [App\Http\Controllers\HomeController::class, 'changeAccount'])->name('change-account');
 Route::post('/change-account', [App\Http\Controllers\HomeController::class, 'updateAccount'])->name('update-account');
 Route::get('/change-password', [App\Http\Controllers\HomeController::class, 'changePassword'])->name('change-password');

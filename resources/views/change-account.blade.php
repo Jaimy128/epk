@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="container">
-    <h1 class="display-6">Change Account Details</h1>
+    <h1>Change Account Details</h1>
     <div class="row justify-content-center">
         <div class="col-md">
-            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+            <a href="{{ route('home') }}" class="btn btn-secondary">Back to Dashboard</a>
             <div class="card my-2">
                 <div class="card-header">Change Account Details</div>
 
