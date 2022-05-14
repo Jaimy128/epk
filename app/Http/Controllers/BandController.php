@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Band;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class BandController extends Controller
 {
@@ -61,6 +63,8 @@ class BandController extends Controller
         ]);
 
         $band->save();
+
+        $band->users()->attach(auth()->user()->id, ['is_owner' => true]);
 
         return redirect()->route('home')->with('success', 'Band was successfully saved.');
     }
@@ -126,6 +130,22 @@ class BandController extends Controller
     {
         $band->delete();
         return redirect()->route('home')->with('success', 'Band was successfully deleted.');
+    }
+
+    public function toggleModerator(Request $request, Band $band){
+
+        $request->validate([
+            'email' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if($user !== NULL){
+            $band->users()->toggle($user->id);
+
+            return back()->with('success', 'Moderator was successfully toggled.');
+        }
+
+        return back()->with('error', 'Something went wrong.');
     }
 
     private function getYoutubeEmbedUrl($url)

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Band;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $bands = Band::all();
+        $bands = Auth::user()->bands;
+
         return view('home', compact('bands'));
     }
 

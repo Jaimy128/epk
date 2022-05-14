@@ -4,20 +4,74 @@
 <div class="container">
     <h1>Edit Band</h1>
 
+    @if ($errors->any())
+    <div class="alert alert-danger mb-2">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    @if (session('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    @can('viewModerators', $band)
+    <div class="card mb-4">
+        <div class="card-header">Active Moderators</div>
+
+        <div class="card-body">
+            @if(count($band->moderators) > 0)
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Name</td>
+                        <td>Email</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($band->moderators as $mod)
+                    <tr>
+                        <td>{{$mod->id}}</td>
+                        <td>{{$mod->name}}</td>
+                        <td>{{$mod->email}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @else
+            <p class="text-muted">No moderators were found</p>
+            @endif
+        </div>
+    </div>
+    @endcan
+
+    @can('toggleModerators', $band)
+    <div class="card mb-4">
+        <div class="card-header">Add / Remove Moderators</div>
+
+        <div class="card-body">
+            <form method="post" action="{{ route('bands.toggleModerator', $band->id) }}" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group my-2">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" name="email" />
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            </form>
+        </div>
+    </div>
+    @endcan
+
+
     <div class="card mb-4">
         <div class="card-header">Edit Band</div>
 
         <div class="card-body">
-            @if ($errors->any())
-            <div class="alert alert-danger mb-2">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-
             <form method="post" action="{{ route('bands.update', $band->id) }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
