@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [App\Http\Controllers\BandController::class, 'index']);
 
 Auth::routes();
+Route::post('/bands/{band}/toggle-moderator', [App\Http\Controllers\BandController::class, 'toggleModerator'])->name('bands.toggleModerator');
 Route::resource('bands', App\Http\Controllers\BandController::class);
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/change-account', [App\Http\Controllers\HomeController::class, 'changeAccount'])->name('change-account');

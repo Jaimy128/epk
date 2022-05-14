@@ -3,6 +3,20 @@
 @section('content')
 <div class="container">
     <h1>Dashboard</h1>
+    @if ($errors->any())
+    <div class="alert alert-danger mb-2">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    @if (session('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md">
             <div class="card mb-4">
@@ -36,11 +50,13 @@
                                 <td><a href="{{ route('bands.show', $band->id) }}">{{$band->name}}</a></td>
                                 <td>
                                     <a href="{{ route('bands.edit',$band->id)}}" class="btn btn-primary">Edit</a>
+                                    @can('delete', $band)
                                     <form action="{{ route('bands.destroy', $band->id)}}" method="post" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger" type="submit">Delete</button>
                                     </form>
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach
